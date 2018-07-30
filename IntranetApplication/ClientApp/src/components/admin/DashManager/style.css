@@ -1,0 +1,13 @@
+﻿
+tr.selectable:hover {
+    background-color: #89ae37;
+    cursor: pointer;
+}
+
+tr.active {
+    background-color: #89aeFF
+}
+
+td.hoverCursor:hover {
+    cursor: pointer;
+}

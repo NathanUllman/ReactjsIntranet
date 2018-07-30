@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntranetApplication", "IntranetApplication.csproj", "{7595BF28-68EF-4AC8-93F1-BD06B36201EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageScrapping", "..\ImageScrapping\ImageScrapping.csproj", "{D9597030-21FB-4CA8-8722-F461FA59E41C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7595BF28-68EF-4AC8-93F1-BD06B36201EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7595BF28-68EF-4AC8-93F1-BD06B36201EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7595BF28-68EF-4AC8-93F1-BD06B36201EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7595BF28-68EF-4AC8-93F1-BD06B36201EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9597030-21FB-4CA8-8722-F461FA59E41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9597030-21FB-4CA8-8722-F461FA59E41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9597030-21FB-4CA8-8722-F461FA59E41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9597030-21FB-4CA8-8722-F461FA59E41C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF504453-F07D-42BD-BB5F-ABBD392ED84D}
+	EndGlobalSection
+EndGlobal
