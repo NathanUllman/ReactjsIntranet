@@ -2,11 +2,7 @@
 import { Route, Redirect } from 'react-router';
 import { GET } from '../../Api/ApiCalls'
 
-export {
-    updateAuth,
-    AdminRoute,
-    LoggedInRoute
-}
+
 
 
 const Auth = { // variables used by functions

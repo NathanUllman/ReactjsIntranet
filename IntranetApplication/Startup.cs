@@ -1,4 +1,5 @@
 using System;
+using IntranetApplication.Models;
 using IntranetApplication.Models.Account;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,7 +77,7 @@ namespace IntranetApplication
         private void AddAuth(ref IServiceCollection services)
         {
             services.AddDbContext<UserContext>(options =>
-                options.UseSqlServer("Server = PLXLicensingDB ; Database = IntranetDB; User Id=test; Password = Penlink123;"));
+                options.UseSqlServer(Constants.CONNECTION_STRING));
 
             services.AddIdentity<User, IdentityRole>() // add applicationUser as Identity role
                 .AddEntityFrameworkStores<UserContext>()

@@ -116,11 +116,10 @@ class DashManager extends Component {
                 <NavLink to={{ pathname: "/InputForms/Dashboard" }} className="btn btn-primary">Add Dashboard</NavLink>
                 <NavLink to={{ pathname: "/InputForms/Dashboard", state: { DashID: this.state.selectedId } }} className="btn btn-info">Edit Selected</NavLink>
                 <a onClick={() => GET("/api/delete/dashboard/" + this.state.selectedId,
-                    (response) => this.setState(
-                        { displayMessage: response }))} className="btn btn-danger">Delete Selected</a>
+                    function() {window.location.href = "/DashManager"})} className="btn btn-danger">Delete Selected</a>
                 <a className="btn btn-light" onClick={() => POST("/api/update/dashboards",
                     this.state.dashboards,
-                    function () { })}>Save Order</a>
+                    function () { this.setState({displayMessage: "Saved."}) })}>Save Order</a>
             </div>;
         }
 

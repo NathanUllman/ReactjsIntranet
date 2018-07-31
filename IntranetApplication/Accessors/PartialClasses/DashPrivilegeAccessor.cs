@@ -130,7 +130,7 @@ namespace IntranetApplication.Accessors
             }
         }
 
-        public Exception RemoveAllDashPrivileges(string userID)
+        public Exception RemoveAllDashPrivilegesForUser(string userID)
         {
             try
             {
@@ -152,7 +152,29 @@ namespace IntranetApplication.Accessors
             }
         }
 
-        
+        public Exception RemoveAllPrivilegesOnDashboard(string dashID)
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("dbo.RemoveAllPrivilegesOnDashboard", _conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@DashboardID", SqlDbType.Int).Value = dashID;
+
+                _conn.Open();
+                cmd.ExecuteNonQuery();
+                _conn.Close();
+                return null;
+            }
+            catch (Exception e)
+            {
+                _conn.Close();
+                return e;
+            }
+        }
+
+
 
     }
 }

@@ -13,8 +13,9 @@ class DashboardInputForm extends Component {
             dashStatusID: 1,
 
             usersList: []
-
         }
+        this.addCheckedBoxes = this.addCheckedBoxes.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
 
@@ -26,7 +27,7 @@ class DashboardInputForm extends Component {
                 <br />
                 <br />
                 <form method="post" action="/api/add/dashboard/WithPriv">
-                <div className="row">                
+                    <div className="row">
                         <div className="col-md-4">
                             <div className="card">
                                 <div className="card-header">
@@ -64,11 +65,11 @@ class DashboardInputForm extends Component {
                                     <table className="table">
                                         <tbody>
                                             <tr><th>User Name</th><th>Email</th><th>Can Edit</th></tr>
-                                            {usersList.map((user) => (                                            
+                                            {usersList.map((user) => (
                                                 <tr key={user.id}>
                                                     <td>{user.userName}</td>
-                                                    <td>{user.email}</td>                                            
-                                                    <td><input type="checkbox" name="usersWhoCanEdit" value={user.id} /></td>
+                                                    <td>{user.email}</td>
+                                                    <td><input type="checkbox" name="usersWhoCanEdit" value={user.id} checked={user.IsChecked} onClick={(e) => this.handleClick(e)} /></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -76,16 +77,64 @@ class DashboardInputForm extends Component {
 
                                 </div>
                             </div>
-                        </div>                 
+                        </div>
                     </div>
                 </form>
             </div>
         );
     }
 
+    handleClick(e) { // need to manual go to our state and check/uncheck things since it is a controlled react form
+        var id = e.target.value;
+        var users = this.state.usersList;
+
+        var index = users.findIndex((elem) => {
+            return elem.id === id; // find which user checkbox was selected            
+        });
+
+        var selectedUser = users.splice(index, 1)[0]; // removes selected element, returns an array so we need [0] to get the object
+
+        selectedUser.IsChecked = !(selectedUser.IsChecked); // toggle
+        users.splice(index, 0,  selectedUser );
+        this.setState({ usersList: users });
+
+
+    }
+
+
+    addCheckedBoxes(users, usersWhoCanEdit) { // add an IsChecked = true for each user in the list that can edit the dashboard
+        var newList = [];
+        users.forEach((user) => {
+            if (usersWhoCanEdit.includes(user.id)) {
+                user.IsChecked = true;
+            } else {
+                user.IsChecked = false;
+            }
+            newList.push(user);
+        });
+        this.setState({ usersList: newList });
+    }
+
+
+
     componentDidMount() {
 
         SetFormListener();
+
+        GET("/api/get/users",
+            (response) => {
+                var users = JSON.parse(response);
+                this.setState({ usersList: users });
+
+                try { // will fail if we are creating a brand new item/dashID is null 
+                    GET("/api/get/user/withPrivilege/" + this.props.location.state.DashID,
+                        (response) => {
+                            var usersWhoCanEdit = JSON.parse(response);
+                            this.addCheckedBoxes(users, usersWhoCanEdit);
+                        });
+                } catch (e) {
+                }
+            });
 
         if (this.props.location.state != null) { // first check to see if the state even exists
             var DashID = this.props.location.state.DashID;
@@ -101,14 +150,6 @@ class DashboardInputForm extends Component {
                             sortOrder: item.sortOrder,
                             dashStatusID: item.dashboardStatusID
                         });
-
-                        GET("/api/get/users",
-                            (response) => {
-                                console.log(JSON.parse(response));
-                                this.setState({ usersList: JSON.parse(response) });
-                            });
-
-
                     });
             }
         }

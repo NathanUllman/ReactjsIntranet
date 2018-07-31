@@ -45,8 +45,7 @@ namespace IntranetApplication.Accessors
             SqlDataReader reader;
             Dashboard result = new Dashboard();
 
-            using (_conn)
-            {
+
                 SqlCommand cmd = new SqlCommand("dbo.GetDashboard", _conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@DashboardID", SqlDbType.Int).Value = id;
@@ -56,37 +55,40 @@ namespace IntranetApplication.Accessors
 
                 while (reader.Read())
                 {
-                    try
-                    {
+
                         result = new Dashboard().Create(reader);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Data);
-                    }
+                    
+
                 }
-                _conn.Close();
-            }
+                _conn.Close();       
             return result;
         }
-        public Exception InsertDashboard(Dashboard newDashboard)
+        public string InsertDashboard(Dashboard newDashboard) // returns the DashId of the recently inserted dash
         {
             try
             {
+                SqlDataReader reader;
+                var result = "";
+
                 SqlCommand cmd = new SqlCommand("dbo.InsertDashboard", _conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@SortOrder", SqlDbType.Int).Value = newDashboard.SortOrder;
                 cmd.Parameters.Add("@DashboardTitle", SqlDbType.VarChar).Value = newDashboard.DashboardTitle;
                 cmd.Parameters.Add("@DashboardStatusID", SqlDbType.Int).Value = newDashboard.DashboardStatusID;
                 _conn.Open();
-                cmd.ExecuteNonQuery();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                     result = reader["DashboardID"].ToString();
+                }
                 _conn.Close();
-                return null;
+                return result;
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
-                _conn.Close();
-                return e;
+                _conn.Close(); // use catch to close
+                throw e;
             }
 
         }
@@ -128,6 +130,7 @@ namespace IntranetApplication.Accessors
             }
             catch (Exception e)
             {
+                _conn.Close();
                 Console.WriteLine(e.Data);
             }
         }

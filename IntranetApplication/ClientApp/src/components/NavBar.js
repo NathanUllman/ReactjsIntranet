@@ -79,7 +79,7 @@ class NavBar extends React.Component {
                         isLoggedIn: false,
                         isAdmin : false
                     });
-                window.location.href = '/'; // direct user to main page when they log out
+               window.location.href = '/'; 
             });
     }
 

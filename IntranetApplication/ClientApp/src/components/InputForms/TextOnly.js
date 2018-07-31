@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; 
 import Delta from 'react-quill';
 
 import { POST, GET } from '../../Api/ApiCalls';
@@ -27,7 +27,7 @@ class TextOnlyInputForm extends Component {
 
             displayText: ''
         }
-       
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -113,6 +113,10 @@ class TextOnlyInputForm extends Component {
         );
     }
 
+    handleSubmit(e) {
+      //  e.preventDefault();
+
+    }
 
     componentDidMount() {
 
@@ -130,7 +134,7 @@ class TextOnlyInputForm extends Component {
 
             GET("/api/get/dashboardItem/" + DashItemID, // get item to edit
                 (response) => {
-
+                  //  console.log(response);
                     var item = JSON.parse(response);
                     if (item.dashboardTypeID !== 3) { console.log("hella error") } // this form is not for this type
 
@@ -144,9 +148,10 @@ class TextOnlyInputForm extends Component {
                         title: item.title,
                         startTime: item.startDateTime,
                         endTime: item.endDateTime,
-                        displayText:  item.dislayText
-                    });     
 
+                        displayText:  item.displayText
+                    });     
+                   
                 });
         }
         else {

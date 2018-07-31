@@ -36,9 +36,9 @@ const DashItemsSortableItem = SortableElement(({ dashboardItem, activeId }) => {
                 />
 
                </td>
-            <td style={{ paddingRight: 20 }}><a onClick ={GET("/api/delete/dashboardItem/" +
+            <td style={{ paddingRight: 20 }}><a onClick ={ ()=> GET("/api/delete/dashboardItem/" +
                 dashboardItem.dashboardItemID,
-                function() {})} className="btn btn-danger">Delete</a></td>
+                function() {window.location.href = "/DashManager"})} className="btn btn-danger">Delete</a></td>
         </tr>
     );
 });

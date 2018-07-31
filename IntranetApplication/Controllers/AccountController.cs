@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntranetApplication.Engines;
+using IntranetApplication.Models;
 using IntranetApplication.Models.Account;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -83,7 +84,8 @@ namespace IntranetApplication.Controllers
                 return false;
             }
 
-            return await _userManager.IsInRoleAsync(currentUser, "Administrator");
+            var result = await _userManager.IsInRoleAsync(currentUser, Constants.AdminRole);
+            return result;
         }
 
         [HttpGet("get/currentUser/isLoggedIn")]

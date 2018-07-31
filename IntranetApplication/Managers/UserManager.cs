@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using IntranetApplication.Accessors;
 using IntranetApplication.Engines;
+using IntranetApplication.Models;
 using IntranetApplication.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -35,13 +36,13 @@ namespace IntranetApplication.Managers
 
             foreach (var user in _userManager.Users)
             {
-                if (!await _userManager.IsInRoleAsync(user, "Administrator"))
+                if (!await _userManager.IsInRoleAsync(user, Constants.AdminRole))
                 {
                     info.Add(user);
                 }
             }
 
-            return _userManager.Users.ToList();
+            return info;
         }
 
         public async Task<User> GetUser(string id)
@@ -217,7 +218,7 @@ namespace IntranetApplication.Managers
 
         private string RemoveAllDashPrivileges(string userID)
         {
-            Exception error = accessor.RemoveAllDashPrivileges(userID);
+            Exception error = accessor.RemoveAllDashPrivilegesForUser(userID);
             return error?.Message;
 
         }

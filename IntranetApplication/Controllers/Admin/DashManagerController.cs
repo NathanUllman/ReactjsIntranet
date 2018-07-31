@@ -69,7 +69,8 @@ namespace IntranetApplication.Controllers.Admin
         [HttpGet("get/dashboardItems")]
         public List<DashboardItem> GetDashboardItems()
         {
-            return manager.GetDashboardItems();
+            var result = manager.GetDashboardItems();
+            return result;
         }
 
         [HttpGet("get/dashboardItem/{id}")]
@@ -78,32 +79,32 @@ namespace IntranetApplication.Controllers.Admin
             return manager.GetDashboardItem(id);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Constants.AdminRole)]
         [HttpPost("update/dashboards")]
         public bool UpdateDashboards([FromBody]List<Dashboard> items)
         {
             return manager.UpdateDashboards(items);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Constants.AdminRole)]
         [HttpPost("update/dashboardItems")]
         public bool UpdateDashboardItems([FromBody]List<DashboardItem> items)
         {
             return manager.UpdateDashboardItems(items);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Constants.AdminRole)]
         [HttpPost("add/dashboard")]
         public string AddDashboard([FromForm]Dashboard dash)
         {
             return manager.addDashboard(dash, ModelState); // returns a serialized list of error messages to ourput for user
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Constants.AdminRole)]
         [HttpPost("add/dashboard/WithPriv")]
         public string AddDashboardWithPriv([FromForm] Dashboard dash, [FromForm] List<string> usersWhoCanEdit)
         {
-            return "/";
+            return manager.AddDashboardWithPriv(dash, ModelState, usersWhoCanEdit);
         }
 
         [Authorize]
@@ -113,7 +114,7 @@ namespace IntranetApplication.Controllers.Admin
             return manager.AddDashboardItems(newItem, ModelState);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Constants.AdminRole)]
         [HttpGet("delete/dashboard/{id}")]
         public string DeleteDashboard(int id)
         {

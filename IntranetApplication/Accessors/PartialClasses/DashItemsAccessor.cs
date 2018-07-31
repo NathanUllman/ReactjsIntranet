@@ -16,8 +16,7 @@ namespace IntranetApplication.Accessors
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
 
-            using (_conn)
-            {
+            
                 cmd.CommandText = "exec GetActiveDashboardItems";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = _conn;
@@ -37,7 +36,7 @@ namespace IntranetApplication.Accessors
                     }
                 }
                 _conn.Close();
-            }
+            
             return result;
         }
 
@@ -47,8 +46,7 @@ namespace IntranetApplication.Accessors
             SqlDataReader reader;
             DashboardItem result = new DashboardItem();
 
-            using (_conn)
-            {
+
                 SqlCommand cmd = new SqlCommand("dbo.GetDashItem", _conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@DashboardItemID", SqlDbType.Int).Value = id;
@@ -65,10 +63,9 @@ namespace IntranetApplication.Accessors
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Data);
-                    }
-                }
-                _conn.Close();
+                    }                             
             }
+            _conn.Close();
             return result;
         }
         public Exception InsertDashItem(DashboardItem newItem)

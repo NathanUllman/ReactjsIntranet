@@ -23,6 +23,7 @@ class ImageUploadedInputForm extends Component {
             imageURI: '',
         }
         this.setPreviewImgListeners = this.setPreviewImgListeners.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -32,7 +33,7 @@ class ImageUploadedInputForm extends Component {
             <div className="container">
                 <br />
                 <br />
-                <form method="post" name="inputForm" action="/api/add/dashboardItem" encType="application/x-www-form-urlencoded">
+                <form method="post" name="inputForm" action="/api/add/dashboardItem" encType="application/x-www-form-urlencoded" onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="col-md-4">
                             <div className="card">
@@ -108,6 +109,18 @@ class ImageUploadedInputForm extends Component {
 
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        let photo = document.getElementById("imgInput").files[0]; // get file from input
+       
+        POST_IMAGE("/api/Engine/UploadImg", photo, (response) => { // uploaded image and gets its new URI
+            this.setState({ imageURI: response });
+           e.submit(); // for hot reloading, page will refresh before you can submit. image save ==> solution change ==> refresh ==> no submission
+        });
+       
+    }
+
+
     componentDidMount() {
 
         this.setPreviewImgListeners();
@@ -139,7 +152,7 @@ class ImageUploadedInputForm extends Component {
                         title: item.title,
                         startTime: item.startDateTime,
                         endTime: item.endDateTime,
-                        imageURI: item.imageURI,
+                        imageURI: item.imageURI
                     });     
                  
                 });
@@ -151,19 +164,16 @@ class ImageUploadedInputForm extends Component {
     }
 
 
+
     setPreviewImgListeners() { // display preview image when an image is uploaded
+
         function readURL(input) {
             //https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#preview').attr('src', e.target.result); // set src of preview img
-
-                    let photo = document.getElementById("imgInput").files[0]; // get file from input
-                    POST_IMAGE("/api/Engine/UploadImg", photo, (response) => { // uploaded image and gets its new URI
-                        this.setState({imageURI : response})                    
-                    });
+                    $('#preview').attr('src', e.target.result); // set src of preview img                                                    
                 }
                 reader.readAsDataURL(input.files[0]);
 

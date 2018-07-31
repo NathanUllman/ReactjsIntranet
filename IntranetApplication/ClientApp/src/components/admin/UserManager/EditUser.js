@@ -12,7 +12,7 @@ class EditUserForm extends Component {
 
             dashboards_All: [],
             dashboards_HasPriv: [],
-            dashboards_NoPriv: [],
+            dashboards_NoPriv: []
         }
         this.handleAddPriv = this.handleAddPriv.bind(this);
         this.handleRemovePriv = this.handleRemovePriv.bind(this);
