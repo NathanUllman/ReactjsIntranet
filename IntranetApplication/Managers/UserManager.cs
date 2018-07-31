@@ -90,7 +90,7 @@ namespace IntranetApplication.Managers
                     string userID = _userManager.Users.Where(x => x.Email == user.Email).ToList()[0].Id; // get the id of the user we just created todo: cleaner
 
                     var errorMessage = AddDashPrivileges(userID, newUser.DashPrivileges);
-                    if (errorMessage != null) ModelState.AddModelError(string.Empty, errorMessage);
+                    if (errorMessage != "") ModelState.AddModelError(string.Empty, errorMessage);
 
                 }
                 else

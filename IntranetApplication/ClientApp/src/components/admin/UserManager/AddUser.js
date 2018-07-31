@@ -11,7 +11,6 @@ class AddUserForm extends Component {
         this.state = {
             email: "",
             password: "",
-            confirmPassword: "",
 
             dashboards: []
         }
@@ -34,11 +33,7 @@ class AddUserForm extends Component {
                             </div>
                             <div className="form-group">
                                 <label>Password</label>
-                                <input name="Password" type="password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} className="form-control" />
-                            </div>
-                            <div className="form-group">
-                                <label>Confirm Password</label>
-                                <input name="Password" type="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.target.value })} className="form-control" />
+                                <input name="Password" type="text" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} className="form-control" />
                             </div>
                             <button type="submit" className="btn btn-default">Register</button>
 

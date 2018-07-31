@@ -111,16 +111,21 @@ class DashManager extends Component {
 
     render() {
         var adminDashbuttons = "";
+        var adminDashItemButtons = "";
         if (this.state.isAdmin == 'true') {
             adminDashbuttons = <div>
                 <NavLink to={{ pathname: "/InputForms/Dashboard" }} className="btn btn-primary">Add Dashboard</NavLink>
                 <NavLink to={{ pathname: "/InputForms/Dashboard", state: { DashID: this.state.selectedId } }} className="btn btn-info">Edit Selected</NavLink>
                 <a onClick={() => GET("/api/delete/dashboard/" + this.state.selectedId,
-                    function() {window.location.href = "/DashManager"})} className="btn btn-danger">Delete Selected</a>
+                    () => {window.location.href = "/DashManager"})} className="btn btn-danger">Delete Selected</a>
                 <a className="btn btn-light" onClick={() => POST("/api/update/dashboards",
                     this.state.dashboards,
-                    function () { this.setState({displayMessage: "Saved."}) })}>Save Order</a>
+                    () => { this.setState({displayMessage: "Dash Order Saved."}) })}>Save Order</a>
             </div>;
+
+            adminDashItemButtons = <a className="btn btn-light" onClick={() => POST("/api/update/dashboardItems",
+                this.state.filteredDashboardItems,
+                () => { this.setState({ displayMessage: "Dash Item Order Saved." }) })}>Save Order</a>;
         }
 
         return (
@@ -167,8 +172,8 @@ class DashManager extends Component {
                                     <NavLink to={{ pathname: "/InputForms/ImageScrapped", state: { DashID: this.state.selectedId } }} className="btn btn-primary">Html scrapped Image</NavLink>
                                     <NavLink to={{ pathname: "/InputForms/ImageUploaded", state: { DashID: this.state.selectedId } }} className="btn btn-primary">Uploaded Image</NavLink>
                                 </div>
-
-                                <a className="btn btn-light" onClick={() => POST("/api/update/dashboardItems", this.state.filteredDashboardItems, function () { })}>Save Order</a>
+                                {adminDashItemButtons}
+                               
                             </div>
                         </div>
                     </div>

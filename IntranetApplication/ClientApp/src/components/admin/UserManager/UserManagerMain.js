@@ -76,7 +76,7 @@ class DashManager extends Component {
             var list = this.state.usersList;
             list.forEach((elem,index) =>
                 {
-                if (elem.user.id === id) {
+                if (elem.id === id) {
                     console.log("remove element");
                     list.splice(index, 1); // removes deleted item from list (so that we dont haved to refresh)
                     this.setState({ usersList: list }); // updates list
